@@ -1,0 +1,38 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Form Link{% endblock %}
+
+<h2>New link</h2>
+
+{% block content %}
+    {% if linkForm %}
+        {{ form_start(linkForm) }}
+            <div class="form-group">
+                {{ form_errors(linkForm.content) }}
+                Title {{ form_widget(linkForm.title, { 'attr':  {
+                    'rows': '1',
+                    'class': 'form-control',
+                }}) }}
+                Url {{ form_widget(linkForm.url, { 'attr':  {
+                    'rows': '1',
+                    'class': 'form-control',
+                }}) }}
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Save" />
+            </div>
+        {{ form_end(linkForm) }}
+
+
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+    {% else %}
+        <a href="{{ path('login') }} ">Log in</a> to add links.
+    {% endif %}
+</p>
+{% endblock %}
