@@ -2,3 +2,7 @@ body {
     padding-top: 70px; 
 }
 
+#errorPanel {
+    padding-top: 30px;
+    padding-bottom: 10px;
+}
