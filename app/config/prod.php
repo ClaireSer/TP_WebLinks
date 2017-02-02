@@ -10,3 +10,5 @@ $app['db.options'] = array(
     'user'     => 'weblinks_user',
     'password' => 'secret',
 );
+
+$app['monolog.level'] = 'WARNING';

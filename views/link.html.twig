@@ -2,17 +2,17 @@
 
 {% block title %}Form Link{% endblock %}
 
-<h2>New link</h2>
-
 {% block content %}
-    {% if linkForm %}
+    <h2>New link</h2>
+    {% if linkForm %} 
         {{ form_start(linkForm) }}
             <div class="form-group">
-                {{ form_errors(linkForm.content) }}
+                {{ form_errors(linkForm.title) }}
                 Title {{ form_widget(linkForm.title, { 'attr':  {
                     'rows': '1',
                     'class': 'form-control',
                 }}) }}
+                {{ form_errors(linkForm.url) }}
                 Url {{ form_widget(linkForm.url, { 'attr':  {
                     'rows': '1',
                     'class': 'form-control',
