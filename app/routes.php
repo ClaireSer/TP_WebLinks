@@ -20,6 +20,17 @@ $app->get('/login', function (Request $request) use ($app) {
 })->bind('login');
 
 
+// Admin page
+$app->get('/admin', function () use ($app) {
+    $links = $app['dao.link']->findAll();
+    $users = $app['dao.user']->findAll();
+    return $app['twig']->render('admin.html.twig', array(
+        'links' => $links,
+        'users' => $users
+    ));
+})->bind('admin');
+
+
 // Submit link form
 $app->match('/link/submit', function (Request $request) use ($app) {
     $linkFormView = null;
@@ -48,3 +59,28 @@ $app->match('/link/submit', function (Request $request) use ($app) {
         'linkForm' => $linkFormView
     ));
 })->bind('link');
+
+// API : get all links
+$app->get('/api/links', function () use ($app) {
+    $links = $app['dao.link']->findAll();
+    $linksInArray = array();
+    foreach ($links as $link) {
+        $linksInArray[] = array(
+            'id' => $link->getId(),
+            'title' => $link->getTitle(),
+            'url' => $link->getUrl()
+        );
+    }
+    return $app->json($linksInArray);
+})->bind('api_links');
+
+// API : get one link
+$app->get('/api/link/{id}', function ($id) use ($app) {
+    $link = $app['dao.link']->find($id);
+    $linkArray = array(
+        'id' => $link->getId(),
+        'title' => $link->getTitle(),
+        'url' => $link->getUrl()
+    );
+    return $app->json($linkArray);
+})->bind('api_link');

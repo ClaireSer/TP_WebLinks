@@ -33,6 +33,16 @@ class LinkDAO extends DAO
         return $entities;
     }
 
+    public function find($id) {
+        $sql = "select * from t_link where link_id = ?";
+        $result = $this->getDb()->fetchAssoc($sql, array($id));
+        
+        if ($result)
+            return $this->buildDomainObject($result);
+        else
+            throw new \Exception("No link matching id " . $id);
+    }
+
     /**
      * Creates an Link object based on a DB row.
      *
