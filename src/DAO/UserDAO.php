@@ -109,8 +109,4 @@ class UserDAO extends DAO implements UserProviderInterface
     {
         return 'WebLinks\Domain\User' === $class;
     }
-
 }
-
-
-

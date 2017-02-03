@@ -59,7 +59,6 @@ class LinkDAO extends DAO
             $author = $this->userDAO->find($authorId);
             $link->setAuthor($author);
         }
-        
         return $link;
     }
 
@@ -69,13 +68,17 @@ class LinkDAO extends DAO
      * @param \WebLinks\Domain\Link $link The link to save
      */ 
      public function save(Link $link) {
-         $linkData = array(
+        $linkData = array(
              "link_title" => $link->getTitle(),
              "link_url" => $link->getUrl(),
              "user_id" => $link->getAuthor()->getId()
-         );
-         $this->getDb()->insert('t_link', $linkData);
-         $id = $this->getDb()->lastInsertId();
-         $link->setId($id);
-     }
+        );
+        if ($link->getId()) {
+            $this->getDb()->update('t_link', $linkData, array('link_id' => $link->getId()));
+        } else {
+            $this->getDb()->insert('t_link', $linkData);
+            $id = $this->getDb()->lastInsertId();
+            $link->setId($id);
+        }
+    }
 }
